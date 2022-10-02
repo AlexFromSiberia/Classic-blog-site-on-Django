@@ -28,7 +28,7 @@ class PostAdmin(admin.ModelAdmin):
     # добавить поля по которым можно делать поиск
     search_fields = ('title', )
     # по каким полям будет возможность фильтра
-    list_filter = ('author', 'category')
+    list_filter = ('author', 'category', 'tags')
     readonly_fields = ('id', 'created_at', 'get_photo', 'views')
     # кнопка save бутет отображаться и внизу и вверхху для удобства
     save_on_top = True

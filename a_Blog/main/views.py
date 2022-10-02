@@ -55,5 +55,18 @@ class GetPost(DetailView):
 
 
 class PostsByTag(ListView):
-    pass
+    model = Post
+    template_name = 'main/by_category.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+    allow_empty = False
 
+    def get_queryset(self):
+        # используем фильтр по модели Post, по слагу из модели Tags используя '__'
+        # из Post.tags  вытащим tags.slug
+        return Post.objects.filter(tags__slug=self.kwargs['slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Записи по тегу: ' + str(Tag.objects.get(slug=self.kwargs['slug']))
+        return context
