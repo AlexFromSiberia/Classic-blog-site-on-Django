@@ -5,9 +5,11 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('', index, name='home'),
+    path('', Home.as_view(), name='home'),
+    path('category/<str:slug>/', PostsByCategory.as_view(), name='category'),
+    path('tag/<str:slug>/', PostsByTag.as_view(), name='tag'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-
+    path('post/<str:slug>/', GetPost.as_view(), name='post'),
 
 ]
 

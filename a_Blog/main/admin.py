@@ -21,17 +21,21 @@ class PostAdmin(admin.ModelAdmin):
     save_as = True
     # from your model (то что будет в СПИСКЕ всех записей)
     list_display = ('id', 'title', 'slug', 'author', 'created_at', 'photo', 'get_photo', 'views', 'category')
+    # при переходе в каждый Пост будем видеть поля:
+    fields = ('title', 'slug', 'author', 'tags', 'content', 'created_at', 'photo', 'get_photo', 'views', 'category')
     # поля также можно сделать ссылками
-    list_display_links = ('title', 'category', )
+    list_display_links = ('id', 'title')
     # добавить поля по которым можно делать поиск
-    search_fields = ('author', )
+    search_fields = ('title', )
     # по каким полям будет возможность фильтра
-    list_filter = ('author', 'category', 'tags')
-    readonly_fields = ('id', 'created_at', 'get_photo')
+    list_filter = ('author', 'category')
+    readonly_fields = ('id', 'created_at', 'get_photo', 'views')
+    # кнопка save бутет отображаться и внизу и вверхху для удобства
+    save_on_top = True
     def get_photo(self, obj):
         # избежать ошибки если фото не существует
         if obj.photo:
-            return mark_safe(f'<img src="{obj.photo.url}" width="75">')
+            return mark_safe(f'<img src="{obj.photo.url}" width="50">')
         else:
             return '-'
 
