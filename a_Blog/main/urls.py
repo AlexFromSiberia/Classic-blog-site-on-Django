@@ -10,6 +10,7 @@ urlpatterns = [
     path('tag/<str:slug>/', PostsByTag.as_view(), name='tag'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('post/<str:slug>/', GetPost.as_view(), name='post'),
+    path('search/', Search.as_view(), name='search'),
 
 ]
 
