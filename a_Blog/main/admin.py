@@ -5,8 +5,8 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 
-# form for ckEditor
 class PostAdminForm(forms.ModelForm):
+    """Form for ckEditor"""
     # content - field in our model
     content = forms.CharField(widget=CKEditorUploadingWidget())
 
@@ -16,7 +16,7 @@ class PostAdminForm(forms.ModelForm):
 
 
 class PostAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title', )}
+    prepopulated_fields = {'slug': ('title',)}
     form = PostAdminForm
     save_as = True
     # from your model (то что будет в СПИСКЕ всех записей)
@@ -26,14 +26,15 @@ class PostAdmin(admin.ModelAdmin):
     # поля также можно сделать ссылками
     list_display_links = ('id', 'title')
     # добавить поля по которым можно делать поиск
-    search_fields = ('title', )
+    search_fields = ('title',)
     # по каким полям будет возможность фильтра
     list_filter = ('author', 'category', 'tags')
     readonly_fields = ('id', 'created_at', 'get_photo', 'views')
     # кнопка save бутет отображаться и внизу и вверхху для удобства
     save_on_top = True
+
     def get_photo(self, obj):
-        # избежать ошибки если фото не существует
+        """Избежать ошибки если фото не существует"""
         if obj.photo:
             return mark_safe(f'<img src="{obj.photo.url}" width="50">')
         else:
@@ -43,11 +44,13 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title', )}
+    """Autofill slug field in admin panel"""
+    prepopulated_fields = {'slug': ('title',)}
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title', )}
+    """Autofill slug field in admin panel"""
+    prepopulated_fields = {'slug': ('title',)}
 
 
 admin.site.register(Category, CategoryAdmin)

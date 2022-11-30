@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/a_Blog" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (Blog (Andrey_Kydly))" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
