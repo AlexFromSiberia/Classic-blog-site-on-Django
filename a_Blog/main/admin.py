@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import *
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from django import forms
 from django.utils.safestring import mark_safe
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import Category, Tag, Post
 
 
 class PostAdminForm(forms.ModelForm):
@@ -16,6 +16,7 @@ class PostAdminForm(forms.ModelForm):
 
 
 class PostAdmin(admin.ModelAdmin):
+    """Admin for Post model"""
     prepopulated_fields = {'slug': ('title',)}
     form = PostAdminForm
     save_as = True
@@ -34,11 +35,10 @@ class PostAdmin(admin.ModelAdmin):
     save_on_top = True
 
     def get_photo(self, obj):
-        """Избежать ошибки если фото не существует"""
+        """Escape an errof if there is no photo"""
         if obj.photo:
             return mark_safe(f'<img src="{obj.photo.url}" width="50">')
-        else:
-            return '-'
+        return '-'
 
     get_photo.short_description = 'Миниатюра'
 

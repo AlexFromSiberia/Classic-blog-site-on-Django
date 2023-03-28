@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
-from .models import Post, Category, Tag
 # для возможности подсчёта просмотров
 from django.db.models import F
+from .models import Post, Category, Tag
 
 
 class Home(ListView):
@@ -24,7 +24,7 @@ class Home(ListView):
 
 
 class PostsByCategory(ListView):
-    """Shows posts of a particular category"""
+    """Show posts of a particular category"""
     model = Post
     template_name = 'main/by_category.html'
     context_object_name = 'posts'
@@ -33,8 +33,8 @@ class PostsByCategory(ListView):
     allow_empty = False
 
     def get_queryset(self):
-        """используем фильтр по модели Post, по слагу из модели Category используя '__'
-        из Post.category  вытащим Category.slug"""
+        """Используем фильтр по модели Post, по слагу из модели Category используя '__'
+        из Post.category вытащим Category.slug"""
         return Post.objects.filter(category__slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -44,7 +44,7 @@ class PostsByCategory(ListView):
 
 
 class GetPost(DetailView):
-    """Shows the full text of selected post"""
+    """Show the full text of selected post"""
     model = Post
     template_name = 'main/DetailView.html'
     context_object_name = 'post'
@@ -59,7 +59,7 @@ class GetPost(DetailView):
 
 
 class PostsByTag(ListView):
-    """Shows posts according selected tag"""
+    """Show posts according selected tag"""
     model = Post
     template_name = 'main/by_category.html'
     context_object_name = 'posts'
@@ -67,8 +67,8 @@ class PostsByTag(ListView):
     allow_empty = False
 
     def get_queryset(self):
-        """используем фильтр по модели Post, по слагу из модели Tags используя '__'
-        из Post.tags  вытащим tags.slug"""
+        """Используем фильтр по модели Post, по слагу из модели Tags используя '__'
+        из Post.tags вытащим tags.slug"""
         return Post.objects.filter(tags__slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -78,6 +78,7 @@ class PostsByTag(ListView):
 
 
 class Search(ListView):
+    """Show posts according selected search"""
     template_name = 'main/search.html'
     context_object_name = 'posts'
     paginate_by = 4
@@ -95,4 +96,3 @@ class Search(ListView):
         # в шаблон html пагинатора тоже добавим {{ s }}
         context['s'] = f"s={self.request.GET.get('s')}&"
         return context
-

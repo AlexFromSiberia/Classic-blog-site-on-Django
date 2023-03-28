@@ -22,11 +22,12 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
+    """Tag model"""
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=255, verbose_name='Url', unique=True)
 
     def __str__(self):
-        """Returns tag title as string, instead of object address"""
+        """Return tag title as string, instead of object address"""
         return self.title
 
     def get_absolute_url(self):
@@ -65,4 +66,3 @@ class Post(models.Model):
         ordering = ['-created_at']
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-
